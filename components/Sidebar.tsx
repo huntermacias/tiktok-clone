@@ -6,21 +6,33 @@ import { AiFillHome, AiOutlineMenu } from 'react-icons/ai';
 import { ImCancelCircle } from 'react-icons/im';
 import { GoogleLogin, GoogleLogout  } from 'react-google-login';
 
+import { useEffect } from 'react'
 import SuggestedAccounts from './SuggestedAccounts';
 import Discover from './Discover';
 import Footer from './Footer';
 // import useAuthStore from '../store/authStore';
-
+import { gapi } from 'gapi-script';
 const Sidebar = () => {
 
 	const [showSidebar, setShowSidebar] = useState(true);
 	const { pathname } = useRouter();
 	const userProfile = false;
 	// const { fetchAllUsers, allUsers }: any = useAuthStore();
-  
+  const clientId = process.env.NEXT_PUBLIC_SANITY_TOKEN;
 	const activeLink = 'flex items-center gap-3 hover:bg-primary p-3 justify-center xl:justify-start cursor-pointer font-semibold text-[#F51997] rounded';
   
 	const normalLink = 'flex items-center gap-3 hover:bg-primary p-3 justify-center xl:justify-start cursor-pointer font-semibold rounded';
+
+  useEffect(() => {
+    const initClient = () => {
+        gapi.client.init({
+        clientId: clientId,
+        scope: ''
+      });
+      };
+      gapi.load('client:auth2', initClient);
+    });
+
 
   return (
 	<div>
