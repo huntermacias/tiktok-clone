@@ -24,14 +24,17 @@ const Sidebar = () => {
 	const normalLink = 'flex items-center gap-3 hover:bg-primary p-3 justify-center xl:justify-start cursor-pointer font-semibold rounded';
 
   useEffect(() => {
-    const initClient = () => {
-        gapi.client.init({
+    const gapi = import("gapi-script").then((pack) => pack.gapi);
+    const initClient = async () => {
+      const d = await gapi;
+        d.client.init({
         clientId: clientId,
         scope: ''
       });
       };
-      gapi.load('client:auth2', initClient);
-    });
+      gapi.then((d) => d.load('client:auth2', initClient));
+      ;
+    }, []);
 
 
   return (
@@ -60,8 +63,8 @@ const Sidebar = () => {
 			
           <Discover />
           <SuggestedAccounts
-            fetchAllUsers={fetchAllUsers}
-            allUsers={allUsers}
+            // fetchAllUsers={fetchAllUsers}
+            // allUsers={allUsers}
           />
           <Footer />
         </div>
